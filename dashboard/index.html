@@ -3,13 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Token Radar: pre-token protocols ranked by implied value</title>
-<meta name="description" content="A radar for protocols that record no token yet, ranked by an implied launch value computed from TVL, seven-day growth, age and their category's live launch multiple.">
+<title>Token Launch Radar</title>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<a class="skip" href="#board">Skip to the board</a>
-<main id="board" tabindex="-1" aria-busy="true"></main>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="eyebrow">DefiLlama snapshot &middot; 14 Nov 2026</p>
+      <h1>Token Launch Radar</h1>
+      <p class="lede">Protocols that record no token yet, ranked by what a token would be worth if the market priced it like the tokens of comparable live protocols.</p>
+    </div>
+    <div class="masthead-stats" id="mastheadStats"></div>
+  </div>
+</header>
+
+<main>
+  <section class="controls" aria-label="Filters">
+    <input id="search" type="search" placeholder="Search a protocol&hellip;" autocomplete="off">
+    <select id="categoryFilter" aria-label="Category"></select>
+    <select id="chainFilter" aria-label="Chain"></select>
+    <label class="check"><input id="watchlistOnly" type="checkbox"> Watchlist only</label>
+    <div class="tabs" role="tablist">
+      <button id="tabPre" class="tab active" role="tab" aria-selected="true">Pre-token</button>
+      <button id="tabLive" class="tab" role="tab" aria-selected="false">Live token</button>
+    </div>
+  </section>
+
+  <p class="method" id="methodLine"></p>
+
+  <section class="board-wrap">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="num sorted-desc">#</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="category">Category</th>
+          <th data-sort="chains">Chains</th>
+          <th data-sort="tvl_usd" class="num">TVL</th>
+          <th data-sort="change_7d" class="num">7d</th>
+          <th data-sort="implied_value_usd" class="num">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="boardBody"></tbody>
+    </table>
+    <p class="empty" id="emptyNote" hidden>No protocol matches these filters.</p>
+  </section>
+
+  <aside class="detail" id="detail" aria-live="polite">
+    <p class="detail-hint">Select a row to see its model breakdown and farm plan.</p>
+  </aside>
+</main>
+
+<footer>
+  <p>Implied value is this radar&rsquo;s own claim, computed from the snapshot: TVL &times; category multiple &times; growth &times; maturity &times; chain spread. It is not a prediction that a token will launch, or when. A protocol &ldquo;records no token&rdquo; in DefiLlama&rsquo;s data; that is not proof it has none. Farm at your own risk, with money you can afford to lose.</p>
+</footer>
+
 <script src="../data.js"></script>
 <script src="app.js"></script>
 </body>
